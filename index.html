@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carding Metal System and Trading Corporation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #0a0a0a;
+      --bg2:      #111111;
+      --bg3:      #161616;
+      --accent:   #e8ff00;
+      --accent2:  #ff4d00;
+      --text:     #f0f0f0;
+      --muted:    #888;
+      --border:   #222;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:
+        linear-gradient(rgba(5,10,20,0.4), rgba(5,10,20,0.6)),
+        url("homepage.png");
+      background-size: cover;
+      background-position: right;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 60px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: padding 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      color: var(--accent);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--accent);
+      color: #000 !important;
+      padding: 10px 24px;
+      font-size: 0.75rem !important;
+      font-weight: 800 !important;
+      letter-spacing: 2px;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--accent2); color: #fff !important; }
+
+    /* ── SECTIONS BASE ── */
+    section {
+      min-height: 100vh;
+      padding: 120px 60px 80px;
+    }
+
+    /* ── HERO ── */
+    #home {
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: visible;
+      padding-top: 180px; padding-bottom: 60px;
+    }
+    .hero-top { display: flex; flex-direction: column; position: relative; z-index: 1; }
+    .hero-bottom {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-tag::before {
+      content: ''; width: 40px; height: 2px; background: var(--accent);
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 9vw, 130px);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      max-width: 900px;
+      position: relative; z-index: 1;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--muted); max-width: 480px;
+      margin-top: 28px; line-height: 1.7;
+      position: relative; z-index: 1;
+    }
+    .hero-actions {
+      display: flex; gap: 20px; margin-top: 0;
+      position: relative; z-index: 1;
+    }
+    .btn-primary {
+      background: var(--accent); color: #000;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 16px 36px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+    .btn-primary:hover { background: var(--accent2); color: #fff; transform: translateY(-2px); }
+    .btn-secondary {
+      border: 1px solid var(--border); color: var(--muted);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 16px 36px; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--text); color: var(--text); }
+
+    /* ── SECTION HEADER ── */
+    .section-tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent);
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-tag::before { content: ''; width: 30px; height: 2px; background: var(--accent); }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 6vw, 80px);
+      line-height: 1; letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .section-title span { color: var(--accent); }
+    .section-desc {
+      font-size: 1rem; color: var(--muted);
+      max-width: 520px; line-height: 1.75;
+      margin-bottom: 60px;
+    }
+    #about .section-desc {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    /* ── PRODUCTS ── */
+    #products { background: rgba(17,17,17,0.88); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+    }
+    .product-card {
+      background: var(--bg3);
+      padding: 0;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent);
+      transition: height 0.4s;
+      z-index: 1;
+    }
+    .product-card:hover { border-color: #333; transform: translateY(-4px); }
+    .product-card:hover::before { height: 100%; }
+    .product-img {
+      width: 100%; height: 180px;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .product-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.4s;
+    }
+    .product-card:hover .product-img img { transform: scale(1.05); }
+    .product-body {
+      padding: 24px 28px 28px;
+      display: flex; flex-direction: column;
+      flex: 1;
+    }
+    .product-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .product-desc {
+      font-size: 0.85rem; color: var(--muted);
+      line-height: 1.55; margin-bottom: 16px;
+      flex: 1;
+    }
+    .product-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; color: var(--accent); letter-spacing: 2px;
+    }
+    .product-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .product-link:hover { color: var(--accent); }
+    .product-link::after { content: '→'; transition: transform 0.2s; }
+    .product-link:hover::after { transform: translateX(4px); }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+      background: rgba(10,10,10,0.75);
+      min-height: 100vh;
+      padding: 90px 60px 60px;
+    }
+    .about-visual {
+      position: relative; height: 400px;
+      overflow: visible;
+    }
+    .about-box {
+      position: absolute;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-box-1 {
+      width: 100%; height: 100%;
+      background: #111;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-box-1 img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .about-box-3 {
+      top: 40px; left: 40px;
+      width: 80px; height: 80px;
+      font-size: 2.5rem;
+      background: #1a1a1a;
+    }
+    .about-box-2 {
+      top: 10px; left: 10px;
+      width: 140px; height: 80px;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .about-box-2 .num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; color: var(--accent); letter-spacing: 2px;
+    }
+    .about-box-2 .lbl {
+      font-size: 0.7rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 2px;
+    }
+    .about-corner {
+      position: absolute; bottom: -30px; left: -30px;
+      width: 70px; height: 70px;
+      border-left: 3px solid var(--accent2);
+      border-bottom: 3px solid var(--accent2);
+      z-index: 2;
+    }
+    .about-content .section-title {
+      font-size: clamp(28px, 3.5vw, 52px);
+      margin-bottom: 8px;
+    }
+    .about-content .section-desc {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: rgba(17,17,17,0.88); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 32px; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding-bottom: 32px; border-bottom: 1px solid var(--border);
+    }
+    .contact-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: #1a1a1a; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .contact-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 6px;
+    }
+    .contact-value { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+    }
+    .form-control {
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text); font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; padding: 14px 18px;
+      outline: none; transition: border-color 0.2s;
+      resize: none;
+    }
+    .form-control::placeholder { color: #444; }
+    .form-control:focus { border-color: var(--accent); }
+    .form-submit {
+      background: var(--accent); color: #000; border: none; cursor: pointer;
+      font-family: 'Syne', sans-serif; font-size: 0.8rem;
+      font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+      padding: 18px 40px; align-self: flex-start;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      transition: background 0.2s, transform 0.2s;
+    }
+    .form-submit:hover { background: var(--accent2); color: #fff; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 40px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem; letter-spacing: 3px; color: var(--accent);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .footer-copy { font-size: 0.8rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 0.75rem; color: var(--muted); text-decoration: none;
+      font-family: 'Syne', sans-serif; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(40px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .d1 { animation-delay: 0.1s; }
+    .d2 { animation-delay: 0.25s; }
+    .d3 { animation-delay: 0.4s; }
+    .d4 { animation-delay: 0.55s; }
+    .d5 { animation-delay: 0.7s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      section { padding: 100px 24px 60px; }
+      #about { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+      .about-visual { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">CARDING METAL SYSTEM AND TRADING CORPORATION</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="hero-top">
+      <div class="hero-tag fade-up d1">Precision Metal Works</div>
+      <h1 class="hero-title fade-up d2">CARDING<br><span>METAL</span><br>SYSTEM</h1>
+    </div>
+
+    <div class="hero-bottom">
+      <div class="hero-actions fade-up d3">
+        <a href="#products" class="btn-primary">Explore Products</a>
+        <a href="#about" class="btn-secondary">Our Story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="section-tag">What We Offer</div>
+    <h2 class="section-title">OUR <span>PRODUCTS</span></h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img"><img src="generalmachineshop.png" alt="General Machine Shop Works"></div>
+        <div class="product-body">
+          <div class="product-name">General Machine Shop Works</div>
+          <p class="product-desc">Full-service machine shop operations covering a wide range of custom metalwork. Fitting, boring, reaming, and general repair for industrial and commercial clients.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="stampingandpunchpress.png" alt="Stamping and Punch Press"></div>
+        <div class="product-body">
+          <div class="product-name">Stamping and Punch Press</div>
+          <p class="product-desc">Precision metal stamping and punch press operations for high-volume metal parts. Progressive dies producing complex blanks, cutouts, and formed components.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="toolanddiemaking.png" alt="Tool and Die Making"></div>
+        <div class="product-body">
+          <div class="product-name">Tool and Die Making</div>
+          <p class="product-desc">Custom tool and die design and fabrication. Hardened steel dies, jigs, fixtures, and gauges manufactured to micron tolerances for long production runs.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="shearingandbending.png" alt="Shearing and Bending"></div>
+        <div class="product-body">
+          <div class="product-name">Shearing &amp; Bending</div>
+          <p class="product-desc">Hydraulic plate shearing up to 25mm and CNC press brake bending. Precision angle forming, channel bending, and flat-bar cutting to tight dimensional specs.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="sprocketfabrication.png" alt="Sprocket Fabrication"></div>
+        <div class="product-body">
+          <div class="product-name">Sprocket Fabrication</div>
+          <p class="product-desc">Custom sprocket fabrication for any drive system — any tooth count, pitch, and material.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="homepage.png" alt="Gear Fabrication"></div>
+        <div class="product-body">
+          <div class="product-name">Gear Fabrication</div>
+          <p class="product-desc">All gear types fabricated in-house: spur, helical, bevel, worm, and ring gears. AGMA-grade tooth profiles hobbed, shaved, and ground for silent, durable performance.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="latheandmilling.png" alt="CNC Machining"></div>
+        <div class="product-body">
+          <div class="product-name">CNC Machining (Lathe/Milling)</div>
+          <p class="product-desc">CNC turning and multi-axis milling of precision components. Shafts, flanges, housings, and complex prismatic parts produced with micron-level repeatability.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="welding.png" alt="Welding Services"></div>
+        <div class="product-body">
+          <div class="product-name">Welding Services</div>
+          <p class="product-desc">MIG, TIG, and arc welding services for structural, industrial, and precision assembly needs.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="stlstr.png" alt="Structural Fabrications"></div>
+        <div class="product-body">
+          <div class="product-name">Structural Fabrications</div>
+          <p class="product-desc">Design, fabrication, and erection of structural steel frameworks. Beams, columns, trusses, mezzanines, and industrial platforms built to AISC and NSCP standards.</p>
+          <a href="#contact" class="product-link">Get Started</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="consultingservices.png" alt="Consulting Services"></div>
+        <div class="product-body">
+          <div class="product-name">Consulting Services</div>
+          <p class="product-desc">Engineering consulting for manufacturing process optimization, material selection, DFM analysis, and quality systems. Expert guidance from concept through production.</p>
+          <div class="product-price">Custom</div>
+          <a href="#contact" class="product-link">Let's Talk</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT US -->
+  <section id="about">
+    <div class="about-visual">
+      <div class="about-box about-box-1">
+        <img src="generalmachineshop.png" alt="General Machine Shop">
+      </div>
+      <div class="about-box about-box-2">
+        <div class="num">1967</div>
+        <div class="lbl">Founded</div>
+      </div>
+      <div class="about-corner"></div>
+    </div>
+    <div class="about-content">
+      <div class="section-tag">Who We Are</div>
+      <h2 class="section-title">ABOUT <span>US</span></h2>
+      <p class="section-desc">
+        CARDING METAL SYSTEM AND TRADING CORPORATION was established in 1967 by our visionary leader Ricardo "Carding" Ng. We offer a comprehensive range of fabrication and machining services under one roof — from general machine shop works, stamping and punch press, tool and die making, shearing and bending, and structural fabrication, to precision gear and sprocket fabrication, CNC machining (lathe and milling), and professional welding services. Whether your project calls for high-volume production or custom one-off components, we have the expertise and equipment to deliver.
+      </p>
+      <h3 class="section-title">Our <span>Mission</span></h3>
+      <p class="section-desc">
+        We are committed to providing our clients with high-quality manufacturing services and are dedicated to continuously improving our methods to produce excellent metal products. Our goal is to achieve a level of distinction by aligning our standards with those of leading global firms. Today, we are engaged in numerous projects, both major and minor, and remain steadfast in delivering craftsmanship that meets global demand.
+      </p>
+      <h4 class="section-title">Our <span>Vision</span></h4>
+      <p class="section-desc">
+        From the precision of a single machined component to the scale of a full structural assembly, we bring the same dedication, skill, and integrity that have defined our shop since 1967. We are not just a fabrication facility — we are a partner in your success, committed to delivering quality work that stands the test of time.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT US -->
+  <section id="contact">
+    <div class="section-tag">Get In Touch</div>
+    <h2 class="section-title">CONTACT <span>US</span></h2>
+    <p class="section-desc">
+      Ready to start something extraordinary? Reach out and let's build it together.
+    </p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Our Office</div>
+            <div class="contact-value">
+              1 Gozon Compound, Letre Road, Brgy. Tonsuya<br>
+              Malabon City, Philippines 1473
+            </div>
+          </div>
+        </div>
+        <iframe
+          src="https://maps.google.com/maps?q=1+Gozon+Compound,+Letre+Road,+Tonsuya,+Malabon+City,+Philippines&output=embed"
+          width="100%"
+          height="250"
+          style="border: 0; display: block;"
+          allowfullscreen=""
+          loading="lazy">
+        </iframe>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-label">Email Us</div>
+            <div class="contact-value">
+              cardingmetal@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#1877F2">
+              <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-label">Follow Us on Facebook</div>
+            <div class="contact-value">
+              <a href="https://www.facebook.com/CardingMetalSystem" target="_blank" style="color: #1877F2; text-decoration: none;">
+                facebook.com/CardingMetalSystem
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Call Us</div>
+            <div class="contact-value">
+              +63 917-1496435 &nbsp;|&nbsp; +63 917-1569362  &nbsp;|&nbsp; +63 917-8389691 <br>
+              +63 (2) 8447-4708 &nbsp;|&nbsp; +63 (2) 8447-4709 &nbsp;|&nbsp; +63 (2) 8447-4697<br>
+              Mon – Sat, 8AM – 5PM Philippines
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" placeholder="Juan"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" placeholder="dela Cruz"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-control" placeholder="juan@company.com"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <input type="text" class="form-control" placeholder="How can we help?"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-control" rows="5" placeholder="Tell us about your project..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">CARDING METAL SYSTEM AND TRADING CORPORATION</div>
+    <div class="footer-copy">© 2026 CARDING METAL SYSTEM AND TRADING CORP. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      nav.style.padding = window.scrollY > 60 ? '14px 60px' : '22px 60px';
+    });
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.querySelector('.form-submit');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#00c853';
+      setTimeout(() => {
+        btn.textContent = 'Send Message →';
+        btn.style.background = '';
+      }, 3000);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if
